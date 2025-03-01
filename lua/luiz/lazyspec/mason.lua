@@ -1,7 +1,12 @@
 return {
     {
         'williamboman/mason.nvim',
-        config = true
+        opts = {
+            ensure_installed = {
+                "clang-format",
+                "codelldb",
+            }
+        },
     },
     {
         'williamboman/mason-lspconfig.nvim',
@@ -13,6 +18,7 @@ return {
                     "rust_analyzer",
                     "ts_ls",
                     "jdtls",
+                    "clangd",
                 },
                 handlers = {
                     function(server_name)
@@ -49,4 +55,15 @@ return {
             })
         end
     },
+    {
+        "jay-babu/mason-nvim-dap.nvim",
+        event = "VeryLazy",
+        dependencies = {
+            "williamboman/mason.nvim",
+            "mfussenegger/nvim-dap",
+        },
+        opts = {
+            handlers = {}
+        },
+    }
 }

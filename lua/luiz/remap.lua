@@ -3,10 +3,10 @@ local function nmap(...) vim.keymap.set("n", ...) end
 local function vmap(...) vim.keymap.set("v", ...) end
 local function imap(...) vim.keymap.set("i", ...) end
 local function xmap(...) vim.keymap.set("x", ...) end
-local function nvmap(...) vim.keymap.set({"n","v"}, ...) end
+local function nvmap(...) vim.keymap.set({ "n", "v" }, ...) end
 
 vim.g.mapleader = " "
-nmap("<leader>pv", vim.cmd.Ex)
+--nmap("<leader>pv", vim.cmd.Ex)
 
 vmap("J", ":m '>+1<CR>gv=gv")
 vmap("K", ":m '<-2<CR>gv=gv")
@@ -42,11 +42,9 @@ nmap("<leader>j", "<cmd>lprev<CR>zz")
 nmap("<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 nmap("<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
-nmap("<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>");
-
-nvmap("<leader>ew", ":lua require('cpp_build').Compile_all_cpp_files()<CR>", { noremap = true, silent = true })
-nvmap("<leader>ee", ":lua require('cpp_build').Compile_current_file()<CR>", { noremap = true, silent = true })
-nvmap("<leader>er", ":lua require('cpp_build').Run_current_file()<CR>", { noremap = true, silent = true })
+nvmap("<leader>ew", ":lua require('luiz.cpp_build').Compile_all_cpp_files()<CR>", { noremap = true, silent = true })
+nvmap("<leader>ee", ":lua require('luiz.cpp_build').Compile_current_file()<CR>", { noremap = true, silent = true })
+nvmap("<leader>er", ":lua require('luiz.cpp_build').Run_current_file()<CR>", { noremap = true, silent = true })
 
 
 
@@ -72,16 +70,16 @@ local plugin_remaps = {
         local builtin = require("telescope.builtin")
 
         nmap("<leader>pf", builtin.find_files, {})
-        nmap("<C-g>", builtin.git_files, {})
+        nmap("<leader>pg", builtin.git_files, {})
         nmap("<leader>ps", function()
             builtin.grep_string({ search = vim.fn.input("Grep > ") })
         end)
     end,
     ["vim-fugitive"] = function()
         nmap("<leader>gs", vim.cmd.Git)
-        nmap("<leader>p", vim.cmd.GitPush)
-        nmap("<leader>P", vim.cmd.GitPullRebase)
-        nmap("<leader>t", vim.cmd.GitPushOrigin)
+        nmap("<leader>gp", vim.cmd.GitPush)
+        nmap("<leader>gP", vim.cmd.GitPullRebase)
+        nmap("<leader>gt", vim.cmd.GitPushOrigin)
     end,
     ["harpoon"] = function()
         local mark = require("harpoon.mark")
@@ -108,11 +106,12 @@ local plugin_remaps = {
         nmap("<space>rn", vim.lsp.buf.rename)
         nvmap("<space>ca", vim.lsp.buf.code_action)
         nmap("gr", vim.lsp.buf.references)
+        nmap("<leader>cd", vim.diagnostic.open_float)
         nmap("<space>f", function()
             vim.lsp.buf.format { async = true }
         end)
     end,
-    ["undotree"] = function ()
+    ["undotree"] = function()
         nmap("<leader>u", vim.cmd.UndotreeToggle)
     end,
     ["neogen"] = function()
@@ -128,20 +127,30 @@ local plugin_remaps = {
     ["trouble.nvim"] = function()
         local trouble = require("trouble")
         nmap("<leader>tt", function()
-            trouble.toggle()
+            vim.cmd("Trouble diagnostics toggle")
         end)
 
-        nmap("[t", function()
-            trouble.next({skip_groups = true, jump = true});
+        nmap("<C-]>", function()
+            trouble.next({ skip_groups = true, jump = true })
         end)
 
-        nmap("]t", function()
-            trouble.previous({skip_groups = true, jump = true});
+        nmap("<C-[>", function()
+            trouble.prev({ skip_groups = true, jump = true })
         end)
     end,
-    ["nvim-tree.lua"] = function ()
+    ["nvim-tree.lua"] = function()
         nmap("<C-n>", "<cmd>NvimTreeToggle<CR>", { desc = "nvimtree toggle window" })
-        nmap("<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus window" })
+        nmap("<C-f>", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus window" })
+    end,
+    ["nvim-dap"] = function()
+        nmap("<leader>db", "<cmd> DapToggleBreakpoint <CR>")
+        nmap("<leader>dr", "<cmd> DapContinue <CR>")
+    end,
+    ["cmake-tools.nvim"] = function ()
+        nmap("<leader>mg", ":CMakeGenerate<CR>", { noremap = true, silent = true })
+        nmap("<leader>mb", ":CMakeBuild<CR>", { noremap = true, silent = true })
+        nmap("<leader>mr", ":CMakeRun<CR>", { noremap = true, silent = true })
+        nmap("<leader>md", ":CMakeDebug<CR>", { noremap = true, silent = true })
     end
 }
 
@@ -157,6 +166,5 @@ return {
             ["<C-y>"] = cmp.mapping.confirm({ select = true }),
             ["<C-Space>"] = cmp.mapping.complete(),
         }
-    end
-
+    end,
 }

@@ -10,7 +10,7 @@ function M.Compile_current_file()
     end
 
     local output_file = (vim.loop.os_uname().sysname == "Linux") and current_file or (current_file .. ".exe")
-    vim.cmd("! g++ \"" .. current_file_with_dir .. "\" -o " .. output_file)
+    vim.cmd("! clang++ \"" .. current_file_with_dir .. "\" -o " .. output_file)
 end
 
 function M.Compile_all_cpp_files()
@@ -28,29 +28,36 @@ function M.Compile_all_cpp_files()
 
     output_file = (vim.loop.os_uname().sysname == "Linux") and output_file or (output_file .. ".exe")
 
-    local gpp_cmd = "g++ -o " .. output_file
+    local clang_cmd = "clang++ -o " .. output_file
     for _, file in ipairs(files) do
-        gpp_cmd = gpp_cmd .. " '" .. file .. "'"
+        clang_cmd = clang_cmd .. " '" .. file .. "'"
     end
 
-    vim.cmd("! " .. gpp_cmd)
+    vim.cmd("! " .. clang_cmd)
 end
 
 function M.Run_current_file()
-    local current_file_path = vim.fn.expand("%:p:r")
-    local current_file = (vim.loop.os_uname().sysname == "Linux") and current_file_path or (current_file_path .. ".exe")
-    local parent_dir = vim.fn.fnamemodify(vim.fn.getcwd(), ":p")
+    local file_name = vim.fn.expand("%:t:r")
+    local parent_dir = vim.fn.expand("%:p:r")
 
-    print("Tentando executar: " .. current_file)
-    print("Parent dir: " .. parent_dir)
-
-    if vim.fn.filereadable(current_file) == 1 then
-        vim.cmd(":split | :startinsert | :terminal \"" .. current_file .. "\"")
-    elseif vim.fn.filereadable(parent_dir .. "/" .. vim.fn.expand("%:t:r")) == 1 then
-        vim.cmd(":split | :startinsert | :terminal \"" .. parent_dir .. "/" .. vim.fn.expand("%:t:r") .. "\"")
-    else
-        print("Erro: Arquivo executável não encontrado.")
+    if vim.loop.os_uname().sysname ~= "Linux" then
+        file_name = file_name .. ".exe"
     end
+    local file_path = parent_dir .. file_name
+
+    if vim.fn.filereadable(file_path) ~= 1 then
+        parent_dir = vim.fn.fnamemodify(vim.fn.getcwd(), ":p")
+        file_path = parent_dir .. file_name
+    end
+
+    if vim.fn.filereadable(file_path) ~= 1 then
+        print("Erro: Arquivo '" .. file_path .. "' não encontrado.")
+        return
+    end
+
+    local cmd = "echo 'Executando: " .. file_path .. "'; " .. file_path
+
+    vim.cmd(":split | :startinsert | :terminal " .. cmd)
 end
 
 return M
