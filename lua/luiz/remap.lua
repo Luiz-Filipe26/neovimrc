@@ -146,11 +146,22 @@ local plugin_remaps = {
         nmap("<leader>db", "<cmd> DapToggleBreakpoint <CR>")
         nmap("<leader>dr", "<cmd> DapContinue <CR>")
     end,
-    ["cmake-tools.nvim"] = function ()
-        nmap("<leader>mg", ":CMakeGenerate<CR>", { noremap = true, silent = true })
+    ["cmake-tools.nvim"] = function()
+        nmap("<leader>mg", function()
+            vim.cmd("CMakeGenerate")
+            vim.cmd("LspRestart")
+        end, { silent = true })
         nmap("<leader>mb", ":CMakeBuild<CR>", { noremap = true, silent = true })
         nmap("<leader>mr", ":CMakeRun<CR>", { noremap = true, silent = true })
         nmap("<leader>md", ":CMakeDebug<CR>", { noremap = true, silent = true })
+        nmap("<leader>mu",
+            function() require("cmake-tools").select_cwd({ args = vim.fn.expand("%:p:h") }) end,
+            { desc = "Update CMake cwd to current buffer directory" })
+        nmap("<leader>mU", function()
+            require("cmake-tools").select_build_dir({
+                args = vim.fn.expand("%:p:h") .. "/out/${variant:buildType}"
+            })
+        end, { desc = "Update CMake build directory to current buffer directory" })
     end
 }
 
