@@ -19,6 +19,6 @@ return {
     { "theprimeagen/vim-be-good" },
     { "theprimeagen/refactoring.nvim" },
     { "folke/zen-mode.nvim" },
-    { "github/copilot.vim" },
+    --{ "github/copilot.vim" },
     { "eandrju/cellular-automaton.nvim" },
 }

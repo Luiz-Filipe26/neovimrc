@@ -3,6 +3,7 @@ local function nmap(...) vim.keymap.set("n", ...) end
 local function vmap(...) vim.keymap.set("v", ...) end
 local function imap(...) vim.keymap.set("i", ...) end
 local function xmap(...) vim.keymap.set("x", ...) end
+local function tmap(...) vim.keymap.set("t", ...) end
 local function nvmap(...) vim.keymap.set({ "n", "v" }, ...) end
 
 vim.g.mapleader = " "
@@ -46,7 +47,7 @@ nvmap("<leader>ew", ":lua require('luiz.cpp_build').Compile_all_cpp_files()<CR>"
 nvmap("<leader>ee", ":lua require('luiz.cpp_build').Compile_current_file()<CR>", { noremap = true, silent = true })
 nvmap("<leader>er", ":lua require('luiz.cpp_build').Run_current_file()<CR>", { noremap = true, silent = true })
 
-
+tmap("<Esc>", "<C-\\><C-n>")
 
 local function remap_plugin(name, on_loaded)
     vim.api.nvim_create_autocmd("User", {
