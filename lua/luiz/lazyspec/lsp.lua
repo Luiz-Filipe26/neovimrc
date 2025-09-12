@@ -7,6 +7,7 @@ return {
         { 'hrsh7th/cmp-nvim-lsp' },
         { 'L3MON4D3/LuaSnip' },
         { 'hrsh7th/cmp-nvim-lsp-signature-help' },
+        { 'saadparwaiz1/cmp_luasnip' },
     },
 
     config = function()
@@ -21,8 +22,8 @@ return {
             mapping = cmp.mapping.preset.insert(require('luiz.remap').cmp_remaps()),
             sources = cmp.config.sources(
                 {
-                    { name = 'luasnip' },
                     { name = 'nvim_lsp' },
+                    { name = 'luasnip' },
                     { name = 'nvim_lsp_signature_help' }
                 },
                 {

@@ -7,6 +7,15 @@ return {
 
         config = function()
             require("luasnip.loaders.from_vscode").lazy_load()
+
+            --[[
+            vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+                pattern = "*.js",
+                callback = function()
+                    vim.bo.filetype = "javascriptreact"
+                end,
+            })
+            --]]
         end,
     }
 }
