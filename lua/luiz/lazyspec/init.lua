@@ -16,6 +16,18 @@ return {
             }
         end
     },
+    {
+        "NvChad/nvim-colorizer.lua",
+        config = function()
+            require("colorizer").setup()
+        end
+    },
+    {
+        'barrett-ruth/live-server.nvim',
+        build = 'npm install -g live-server',
+        cmd = { 'LiveServerStart', 'LiveServerStop' },
+        config = true
+    },
     { "theprimeagen/vim-be-good" },
     { "theprimeagen/refactoring.nvim" },
     { "folke/zen-mode.nvim" },

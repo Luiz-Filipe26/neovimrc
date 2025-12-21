@@ -2,9 +2,11 @@ return {
     "nvimtools/none-ls.nvim",
     event = "VeryLazy",
     opts = function()
+        local null_ls = require("null-ls")
         return {
             sources = {
-                require("null-ls").builtins.formatting.clang_format,
+                null_ls.builtins.formatting.clang_format,
+                null_ls.builtins.formatting.prettier,
             }
         }
     end
