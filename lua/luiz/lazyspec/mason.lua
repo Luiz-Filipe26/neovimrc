@@ -19,7 +19,9 @@ return {
             }
 
             if vim.fn.executable("clang-format") == 0 then
-                table.insert(tools, "clang-format")
+                if vim.fn.executable("python") == 1 or vim.fn.executable("python3") == 1 then
+                    table.insert(tools, "clang-format")
+                end
             end
 
             require("mason-tool-installer").setup({
