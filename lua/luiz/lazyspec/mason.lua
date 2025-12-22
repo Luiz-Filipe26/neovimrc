@@ -9,6 +9,8 @@ return {
         config = function()
             local tools = {
                 "lua_ls",
+                "cssls",
+                "jsonls",
                 "rust_analyzer",
                 "vtsls",
                 "jdtls",

@@ -14,7 +14,7 @@ return {
         lsp_zero.preset("recommended")
 
         require('mason-lspconfig').setup({
-            ensure_installed = { "lua_ls", "vtsls", "clangd" },
+            ensure_installed = {},
             handlers = nil,
         })
 
