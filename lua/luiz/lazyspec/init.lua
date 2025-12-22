@@ -1,4 +1,5 @@
 return {
+    { "nvim-treesitter/playground" },
     { "theprimeagen/harpoon" },
     { "tpope/vim-fugitive" },
     {

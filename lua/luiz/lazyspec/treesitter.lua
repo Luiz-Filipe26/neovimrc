@@ -1,31 +1,36 @@
 return {
     "nvim-treesitter/nvim-treesitter",
-    lazy = false,
+    branch = "master",
     build = ":TSUpdate",
     config = function()
-        local ts = require("nvim-treesitter")
+        require("nvim-treesitter.configs").setup({
+            -- A list of parser names, or "all"
+            ensure_installed = {
+                "vimdoc", "javascript", "typescript", "c", "lua", "rust",
+                "jsdoc", "bash", "cpp",
+            },
 
-        ts.install({
-            "vimdoc", "javascript", "typescript", "c", "lua", "rust",
-            "jsdoc", "bash", "cpp",
-            "markdown", "markdown_inline"
-        })
+            -- Install parsers synchronously (only applied to `ensure_installed`)
+            sync_install = false,
 
-        vim.api.nvim_create_autocmd("FileType", {
-            callback = function()
-                local lang = vim.treesitter.language.get_lang(vim.bo.filetype) or vim.bo.filetype
-                local installed_parsers = ts.get_installed()
-                if vim.tbl_contains(installed_parsers, lang) then
-                    vim.treesitter.start()
-                end
-            end,
-        })
+            -- Automatically install missing parsers when entering buffer
+            -- Recommendation: set to false if you don"t have `tree-sitter` CLI installed locally
+            auto_install = true,
 
-        vim.api.nvim_create_autocmd("FileType", {
-            pattern = "markdown",
-            callback = function()
-                vim.cmd("syntax on")
-            end,
+            indent = {
+                enable = false
+            },
+
+            highlight = {
+                -- `false` will disable the whole extension
+                enable = true,
+
+                -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+                -- Set this to `true` if you depend on "syntax" being enabled (like for indentation).
+                -- Using this option may slow down your editor, and you may see some duplicate highlights.
+                -- Instead of true it can also be a list of languages
+                additional_vim_regex_highlighting = { "markdown" },
+            },
         })
     end
 }
