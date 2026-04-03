@@ -1,5 +1,5 @@
+require("luiz.set")
 require("luiz.lazy")
 require("luiz.remap")
-require("luiz.set")
 require("luiz.config")
 require("luiz.keymap-viewer").setup()

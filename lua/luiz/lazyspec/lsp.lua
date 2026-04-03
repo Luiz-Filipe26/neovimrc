@@ -61,6 +61,15 @@ return {
                 { { name = 'buffer' } }),
         })
 
+        local orig_handler = vim.lsp.handlers["textDocument/publishDiagnostics"]
+        vim.lsp.handlers["textDocument/publishDiagnostics"] = function(err, result, ctx, config)
+            if result and result.uri and result.uri:find("node_modules") then
+                result.diagnostics = {}
+            end
+            orig_handler(err, result, ctx, config)
+        end
+
+
         vim.diagnostic.config({
             float = { focusable = false, style = "minimal", border = "rounded", source = "always", header = "", prefix = "" },
         })
