@@ -6,7 +6,9 @@ return {
         return {
             sources = {
                 null_ls.builtins.formatting.clang_format,
-                null_ls.builtins.formatting.prettier,
+                null_ls.builtins.formatting.prettier.with({
+                    extra_args = { "--tab-width", "4" }
+                }),
             }
         }
     end

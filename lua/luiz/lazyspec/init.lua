@@ -1,10 +1,18 @@
 return {
-    { "nvim-treesitter/playground" },
     { "theprimeagen/harpoon" },
-    { "tpope/vim-fugitive" },
     {
         "j-hui/fidget.nvim",
         config = true
+    },
+    {
+        "axkirillov/unified.nvim",
+        lazy = false,
+        cmd = "Unified",
+        opts = {
+            file_tree = {
+                enabled = false,
+            },
+        },
     },
     { "neovim/nvim-lspconfig" },
     { "folke/tokyonight.nvim" },

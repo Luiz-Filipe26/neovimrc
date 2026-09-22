@@ -19,5 +19,11 @@ vim.g.maplocalleader = "\\"
 
 require("lazy").setup({
     spec = "luiz.lazyspec",
-    change_detection = { notify = false }
+    change_detection = { notify = false },
+
+    performance = {
+        rtp = {
+            reset = false,
+        },
+    },
 })

@@ -140,6 +140,22 @@ local plugin_remaps = {
             neogen.generate({ type = "type" })
         end)
     end,
+    ["unified.nvim"] = function()
+        nmap("<leader>gu", function() vim.cmd("Unified HEAD") end)
+        for distance = 0, 9 do
+            nmap("<leader>gu" .. distance, function()
+                local revision = distance == 0
+                    and "HEAD"
+                    or "HEAD~" .. distance
+
+                vim.cmd("Unified " .. revision)
+            end)
+        end
+
+        nmap("<leader>gU", function()
+            vim.cmd("Unified reset")
+        end)
+    end,
     ["trouble.nvim"] = function()
         local trouble = require("trouble")
         nmap("<leader>tt", function()
