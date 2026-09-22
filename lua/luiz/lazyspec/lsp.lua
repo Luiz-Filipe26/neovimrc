@@ -34,7 +34,9 @@ return {
                 Lua = { diagnostics = { globals = { "vim", "it", "describe" } } }
             }
         })
-        enable("clangd")
+        enable("clangd", {
+            filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
+        })
         enable("vtsls", {
             settings = {
                 vtsls = {

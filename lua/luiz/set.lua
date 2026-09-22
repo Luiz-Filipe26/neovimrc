@@ -39,3 +39,9 @@ vim.opt.fileformat = "unix"
 vim.g.netrw_browse_split = 0
 vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25
+
+local python_host = vim.fn.expand("~/.local/bin/pynvim-python")
+
+if vim.fn.executable(python_host) == 1 then
+    vim.g.python3_host_prog = python_host
+end
