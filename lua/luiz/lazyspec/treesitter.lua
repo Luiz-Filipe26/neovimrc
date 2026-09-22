@@ -16,7 +16,6 @@ return {
             "dockerfile",
             "editorconfig",
             "gitattributes",
-            "gitcommit",
             "gitignore",
             "html",
             "ini",
