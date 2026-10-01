@@ -1,5 +1,6 @@
 return {
     "rcarriga/nvim-dap-ui",
+    cond = vim.env.NVIM_THIN ~= "1",
     event = "VeryLazy",
     dependencies = {
         "mfussenegger/nvim-dap",

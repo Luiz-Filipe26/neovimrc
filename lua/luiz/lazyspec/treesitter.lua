@@ -1,11 +1,28 @@
+local thin = vim.env.NVIM_THIN == "1"
+
 return {
     "nvim-treesitter/nvim-treesitter",
     branch = "main",
     lazy = false,
-    build = ":TSUpdate",
+    build = thin and function()
+        local task = require("nvim-treesitter").update(nil, { max_jobs = 1 })
+        assert(task:wait(600000), "Tree-sitter parser update failed")
+    end or ":TSUpdate",
 
     config = function()
-        require("nvim-treesitter").install({
+        if thin then
+            -- Automatic installs and TSInstall/TSUpdate share this module.
+            local installer = require("nvim-treesitter.install")
+            for _, operation in ipairs({ "install", "update" }) do
+                local run = installer[operation]
+                installer[operation] = function(languages, options)
+                    options = vim.tbl_extend("force", options or {}, { max_jobs = 1 })
+                    return run(languages, options)
+                end
+            end
+        end
+
+        local task = require("nvim-treesitter").install({
             "asm",
             "bash",
             "c",
@@ -41,6 +58,9 @@ return {
             "xml",
             "yaml",
         })
+        if thin then
+            assert(task:wait(600000), "Tree-sitter parser installation failed")
+        end
 
         vim.api.nvim_create_autocmd("FileType", {
             group = vim.api.nvim_create_augroup("LuizTreesitter", {

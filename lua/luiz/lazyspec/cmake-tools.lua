@@ -1,5 +1,6 @@
 return {
     "Civitasv/cmake-tools.nvim",
+    cond = vim.env.NVIM_THIN ~= "1",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function ()
         require("cmake-tools").setup {

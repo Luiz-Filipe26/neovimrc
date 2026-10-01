@@ -1,6 +1,7 @@
 return {
     {
         'williamboman/mason.nvim',
+        cond = vim.env.NVIM_THIN ~= "1",
         opts = {},
     },
     {
@@ -44,6 +45,7 @@ return {
     },
     {
         "jay-babu/mason-nvim-dap.nvim",
+        cond = vim.env.NVIM_THIN ~= "1",
         event = "VeryLazy",
         dependencies = {
             "williamboman/mason.nvim",

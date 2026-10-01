@@ -19,6 +19,7 @@ vim.g.maplocalleader = "\\"
 
 require("lazy").setup({
     spec = "luiz.lazyspec",
+    concurrency = vim.env.NVIM_THIN == "1" and 1 or nil,
     change_detection = { notify = false },
 
     performance = {

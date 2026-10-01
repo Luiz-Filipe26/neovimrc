@@ -32,6 +32,7 @@ return {
     },
     {
         'barrett-ruth/live-server.nvim',
+        cond = vim.env.NVIM_THIN ~= "1",
         build = 'npm install -g live-server',
         cmd = { 'LiveServerStart', 'LiveServerStop' },
         config = true

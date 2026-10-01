@@ -43,9 +43,11 @@ nmap("<leader>j", "<cmd>lprev<CR>zz")
 nmap("<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 nmap("<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
-nvmap("<leader>ew", ":lua require('luiz.cpp_build').Compile_all_cpp_files()<CR>", { noremap = true, silent = true })
-nvmap("<leader>ee", ":lua require('luiz.cpp_build').Compile_current_file()<CR>", { noremap = true, silent = true })
-nvmap("<leader>er", ":lua require('luiz.cpp_build').Run_current_file()<CR>", { noremap = true, silent = true })
+if vim.env.NVIM_THIN ~= "1" then
+    nvmap("<leader>ew", ":lua require('luiz.cpp_build').Compile_all_cpp_files()<CR>", { noremap = true, silent = true })
+    nvmap("<leader>ee", ":lua require('luiz.cpp_build').Compile_current_file()<CR>", { noremap = true, silent = true })
+    nvmap("<leader>er", ":lua require('luiz.cpp_build').Run_current_file()<CR>", { noremap = true, silent = true })
+end
 
 tmap("<Esc>", "<C-\\><C-n>")
 
