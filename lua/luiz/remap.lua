@@ -107,6 +107,10 @@ local plugin_remaps = {
         nmap("<leader>hm", ui.toggle_quick_menu)
     end,
     ["lsp-zero.nvim"] = function()
+        if vim.env.NVIM_THIN == "1" then
+            return
+        end
+
         nmap("<leader>f", vim.lsp.buf.format)
         nmap("gD", vim.lsp.buf.declaration)
         nmap("gd", vim.lsp.buf.definition)
@@ -181,7 +185,9 @@ local plugin_remaps = {
     ["cmake-tools.nvim"] = function()
         nmap("<leader>mg", function()
             vim.cmd("CMakeGenerate")
-            vim.cmd("LspRestart")
+            if vim.env.NVIM_THIN ~= "1" then
+                vim.cmd("LspRestart")
+            end
         end, { silent = true })
         nmap("<leader>mb", ":CMakeBuild<CR>", { noremap = true, silent = true })
         nmap("<leader>mr", ":CMakeRun<CR>", { noremap = true, silent = true })

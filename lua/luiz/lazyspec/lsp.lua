@@ -12,17 +12,24 @@ return {
     },
 
     config = function()
+        local thin = vim.env.NVIM_THIN == "1"
         local lsp_zero = require('lsp-zero')
-        lsp_zero.preset("recommended")
+        if not thin then
+            lsp_zero.preset("recommended")
 
-        require('mason-lspconfig').setup({
-            ensure_installed = {},
-            handlers = nil,
-        })
+            require('mason-lspconfig').setup({
+                ensure_installed = {},
+                handlers = nil,
+            })
+        end
 
         local capabilities = lsp_zero.get_capabilities()
 
         local function enable(name, opts)
+            if thin then
+                return
+            end
+
             opts = opts or {}
             opts.capabilities = vim.tbl_deep_extend("force", opts.capabilities or {}, capabilities)
             vim.lsp.config(name, opts)

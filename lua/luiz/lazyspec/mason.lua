@@ -5,6 +5,7 @@ return {
     },
     {
         'WhoIsSethDaniel/mason-tool-installer.nvim',
+        cond = vim.env.NVIM_THIN ~= "1",
         dependencies = { 'williamboman/mason.nvim', 'williamboman/mason-lspconfig.nvim' },
         config = function()
             local tools = {
@@ -33,6 +34,7 @@ return {
     },
     {
         'williamboman/mason-lspconfig.nvim',
+        cond = vim.env.NVIM_THIN ~= "1",
         dependencies = { 'williamboman/mason.nvim' },
         config = function()
             require("mason-lspconfig").setup({
