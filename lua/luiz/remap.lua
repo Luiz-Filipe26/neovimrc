@@ -147,6 +147,10 @@ local plugin_remaps = {
         end)
     end,
     ["unified.nvim"] = function()
+        local navigation = require("unified.navigation")
+
+        nmap("]h", navigation.next_hunk)
+        nmap("[h", navigation.previous_hunk)
         nmap("<leader>gu", function() vim.cmd("Unified HEAD") end)
         for distance = 0, 9 do
             nmap("<leader>gu" .. distance, function()
